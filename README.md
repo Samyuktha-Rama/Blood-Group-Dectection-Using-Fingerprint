@@ -3,15 +3,10 @@ Blood Group Detection Using Fingerprint
 A deep learning–based Flask web application that predicts a person’s blood group from their fingerprint image.
 
 Features
-• Fingerprint Verification:
-Validates that the uploaded image is a fingerprint using OpenCV techniques such as edge detection, variance, and frequency analysis.
-• Blood Group Prediction:
-A trained CNN model classifies the fingerprint into one of eight groups:
-A+, A-, B+, B-, AB+, AB-, O+, O-.
-• User-Friendly Web Interface:
-A simple Flask-based web app for image upload and prediction display.
-• Cloud Model Hosting:
-The trained model is hosted on Hugging Face Hub and dynamically loaded at runtime.
+- Fingerprint Verification: Validates that the uploaded image is a fingerprint using OpenCV techniques such as edge detection, variance, and frequency analysis.
+- Blood Group Prediction: A trained CNN model classifies the fingerprint into one of eight groups:A+, A-, B+, B-, AB+, AB-, O+, O-.
+- User-Friendly Web Interface: A simple Flask-based web app for image upload and prediction display.
+- Cloud Model Hosting: The trained model is hosted on Hugging Face Hub and dynamically loaded at runtime.
 
 Project Structure
 
@@ -24,9 +19,10 @@ Project Structure
 
 Setup and Installation
 Prerequisites
-•	Python 3.x
-•	Kaggle API credentials (for training via train.py)
-•	Hugging Face API token (for model hosting)
+-	Python 3.x
+-	Kaggle API credentials (for training via train.py)
+-	Hugging Face API token (for model hosting)
+
 Local Setup
 1.	Clone the Repository:
 2.	git clone <Samyuktha-Rama/Blood-Group-Dectection-Using-Fingerprint>
@@ -50,17 +46,8 @@ The project uses the Fingerprint-Based Blood Group Dataset available on Kaggle.
 The train.py script automatically downloads and preprocesses this dataset.
 
 Technologies Used
-1.Backend: Python, Flask, Gunicorn
-2.Machine Learning: TensorFlow/Keras, OpenCV, NumPy
-3.Model Hosting: Hugging Face Hub
-4.Deployment: Render
-5.Frontend: HTML, CSS, JavaScript
-
-
-
-
-
-
-
-
-
+- Backend: Python, Flask, Gunicorn
+- Machine Learning: TensorFlow/Keras, OpenCV, NumPy
+- Model Hosting: Hugging Face Hub
+- Deployment: Render
+- Frontend: HTML, CSS, JavaScript
