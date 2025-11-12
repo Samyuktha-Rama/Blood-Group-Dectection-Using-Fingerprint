@@ -1,0 +1,9 @@
+Flask
+flask-cors
+tensorflow==2.15.0
+opencv-python
+numpy
+scikit-learn
+gunicorn
+kagglehub
+huggingface_hub
