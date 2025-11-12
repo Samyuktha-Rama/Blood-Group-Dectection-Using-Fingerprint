@@ -20,8 +20,7 @@ Project Structure
 ├── is_fingerprint.py       
 ├── requirements.txt        
 ├── Procfile                
-└── templates/
-    └── index.html     
+└── templates/index.html     
 
 Setup and Installation
 Prerequisites
@@ -56,6 +55,7 @@ Technologies Used
 3.Model Hosting: Hugging Face Hub
 4.Deployment: Render
 5.Frontend: HTML, CSS, JavaScript
+
 
 
 
