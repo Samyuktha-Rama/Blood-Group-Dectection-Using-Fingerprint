@@ -14,6 +14,7 @@ A simple Flask-based web app for image upload and prediction display.
 The trained model is hosted on Hugging Face Hub and dynamically loaded at runtime.
 
 Project Structure
+
 .
 ├── app.py                  
 ├── train.py                
@@ -56,6 +57,7 @@ Technologies Used
 • Model Hosting: Hugging Face Hub
 • Deployment: Render
 • Frontend: HTML, CSS, JavaScript
+
 
 
 
