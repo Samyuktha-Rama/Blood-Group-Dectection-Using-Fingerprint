@@ -355,10 +355,10 @@
         let error_message = '';
 
         try {
-            // Attempt to parse JSON. This line throws 'Unexpected end of JSON input' on non-JSON errors.
+            // Attempt to parse JSON. This throws the error on malformed data.
             data = await response.json(); 
         } catch (e) {
-            // If JSON parsing fails (e.g., server returned HTML/truncated data)
+            // This handles the 'Unexpected end of JSON input' or other parsing errors
             error_message = `Server responded with a non-JSON or empty body (Status: ${response.status} ${response.statusText})`;
         }
 
