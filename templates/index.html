@@ -345,30 +345,47 @@
       formData.append('file', file);
 
       try {
-        // *** ORIGINAL FUNCTIONALITY PRESERVED ***
         const response = await fetch('/predict', { 
-        method: 'POST',
-        body: formData,
+          method: 'POST',
+          body: formData,
         });
         
-        const data = await response.json();
+        // --- 🧱 IMPROVED ERROR HANDLING LOGIC 🧱 ---
+        let data = {};
+        let error_message = '';
 
-        if (data.blood_group) {
-          result.textContent = `Blood Group: ${data.blood_group}`;
+        try {
+            // Attempt to parse JSON. This line throws 'Unexpected end of JSON input' on non-JSON errors.
+            data = await response.json(); 
+        } catch (e) {
+            // If JSON parsing fails (e.g., server returned HTML/truncated data)
+            error_message = `Server responded with a non-JSON or empty body (Status: ${response.status} ${response.statusText})`;
+        }
+
+        if (!response.ok) { // Check for HTTP status code 4xx or 5xx
+            // Use server's error message if available, otherwise use our client-side message
+            const apiError = data.error || error_message || `HTTP Error ${response.status}`;
+            result.textContent = `Prediction Failed: ${apiError}`;
+        } else if (data.blood_group) {
+            // Success
+            result.textContent = `Blood Group: ${data.blood_group}`;
         } else {
-          result.textContent = `Error: ${data.error || 'Unable to predict blood group'}`;
+            // Success status (200) but unexpected data format
+            result.textContent = `Error: ${data.error || 'Server responded unexpectedly.'}`;
         }
 
         goBackBtn.style.display = 'inline-block';
       } catch (error) {
-        result.textContent = `Error: ${error.message}`;
+        // This catches network errors (e.g., server is offline or connection reset)
+        result.textContent = `Network Error: Could not connect to the server. (${error.message})`;
         goBackBtn.style.display = 'inline-block';
       } finally {
         detectBtn.disabled = false;
         spinner.style.display = 'none';
         
+        // Ensure the correct button is displayed after the process finishes
         if (input.files[0] && goBackBtn.style.display !== 'inline-block') {
-             detectBtn.style.display = 'inline-block';
+              detectBtn.style.display = 'inline-block';
         }
       }
     }
