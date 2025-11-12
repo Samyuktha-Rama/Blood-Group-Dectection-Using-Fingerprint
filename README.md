@@ -1,4 +1,4 @@
-Fingerprint-Based Blood Group Detection System
+Blood Group Detection Using Fingerprint
 
 A deep learning–based Flask web application that predicts a person’s blood group from their fingerprint image.
 
@@ -21,6 +21,8 @@ Project Structure
 ├── requirements.txt        
 ├── Procfile                
 └── templates/
+
+
     └── index.html     
 
 Setup and Installation
@@ -51,13 +53,12 @@ The project uses the Fingerprint-Based Blood Group Dataset available on Kaggle.
 The train.py script automatically downloads and preprocesses this dataset.
 
 Technologies Used
+1.Backend: Python, Flask, Gunicorn
+2.Machine Learning: TensorFlow/Keras, OpenCV, NumPy
+3.Model Hosting: Hugging Face Hub
+4.Deployment: Render
+5.Frontend: HTML, CSS, JavaScript
 
-
-• Backend: Python, Flask, Gunicorn
-• Machine Learning: TensorFlow/Keras, OpenCV, NumPy
-• Model Hosting: Hugging Face Hub
-• Deployment: Render
-• Frontend: HTML, CSS, JavaScript
 
 
 
