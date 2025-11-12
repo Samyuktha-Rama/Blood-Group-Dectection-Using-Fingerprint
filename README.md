@@ -21,8 +21,6 @@ Project Structure
 ├── requirements.txt        
 ├── Procfile                
 └── templates/
-
-
     └── index.html     
 
 Setup and Installation
@@ -58,6 +56,7 @@ Technologies Used
 3.Model Hosting: Hugging Face Hub
 4.Deployment: Render
 5.Frontend: HTML, CSS, JavaScript
+
 
 
 
