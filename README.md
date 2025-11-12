@@ -15,7 +15,6 @@ The trained model is hosted on Hugging Face Hub and dynamically loaded at runtim
 
 Project Structure
 
-.
 ├── app.py                  
 ├── train.py                
 ├── is_fingerprint.py       
@@ -57,6 +56,7 @@ Technologies Used
 • Model Hosting: Hugging Face Hub
 • Deployment: Render
 • Frontend: HTML, CSS, JavaScript
+
 
 
 
