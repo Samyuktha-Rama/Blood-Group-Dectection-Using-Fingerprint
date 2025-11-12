@@ -51,11 +51,14 @@ The project uses the Fingerprint-Based Blood Group Dataset available on Kaggle.
 The train.py script automatically downloads and preprocesses this dataset.
 
 Technologies Used
+
+
 • Backend: Python, Flask, Gunicorn
 • Machine Learning: TensorFlow/Keras, OpenCV, NumPy
 • Model Hosting: Hugging Face Hub
 • Deployment: Render
 • Frontend: HTML, CSS, JavaScript
+
 
 
 
