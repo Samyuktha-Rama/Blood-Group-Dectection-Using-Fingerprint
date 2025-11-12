@@ -5,16 +5,17 @@ import numpy as np
 from tensorflow.keras.models import load_model
 import logging
 import os
-from huggingface_hub import hf_hub_download 
+from huggingface_hub import hf_hub_download
 
 app = Flask(__name__, template_folder='templates')
 CORS(app)
 
-logging.basicConfig(level=logging.INFO) #
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 MODEL_REPO_ID = "Samyuktha-Rama/fingerprint-bloodgroup-classifier"
 MODEL_FILENAME = "blood_group_model.h5"
+model = None
 
 try:
     logger.info(f"Attempting to download model '{MODEL_FILENAME}' from Hugging Face Hub (Repo: {MODEL_REPO_ID})...")
@@ -24,18 +25,13 @@ try:
 
     model = load_model(downloaded_model_path)
     logger.info("Model loaded successfully into Keras")
-except Exception as e:
-    logger.error(f"FATAL ERROR: Could not load model from Hugging Face Hub. Please check MODEL_REPO_ID and file name. Error: {e}")
 
-    exit(1)
+except Exception as e:
+    logger.error(f"FATAL ERROR: Could not load model from Hugging Face Hub. Error: {e}")
 
 blood_groups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
 
 def is_fingerprint(image):
-    """
-    Checks if an uploaded image likely contains a fingerprint pattern 
-    based on edge density, variance, and frequency analysis.
-    """
     try:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -45,8 +41,8 @@ def is_fingerprint(image):
         total_pixels = edges.size
         edge_percentage = (edge_count / total_pixels) * 100
 
-        min_edge_percent = 2.5 
-        max_edge_percent = 30.0 
+        min_edge_percent = 2.5
+        max_edge_percent = 30.0
         threshold = total_pixels * (min_edge_percent / 100)
 
         variance = np.var(gray)
@@ -56,11 +52,7 @@ def is_fingerprint(image):
         freq = np.fft.fft2(roi)
         freq_power = np.abs(freq) ** 2
         ridge_freq = np.mean(freq_power) > 500
-
-        logger.debug(f"Edge %: {edge_percentage:.2f}% (Range: {min_edge_percent}-{max_edge_percent})")
-        logger.debug(f"Variance: {variance:.2f} (Min: 50)")
-        logger.debug(f"Ridge power mean: {np.mean(freq_power):.2f} (Min: 500)")
-
+        
         is_fp = (edge_count > threshold and 
                  min_edge_percent <= edge_percentage <= max_edge_percent and 
                  variance > 50 and 
@@ -76,6 +68,10 @@ def is_fingerprint(image):
 
 @app.route('/predict', methods=['POST'])
 def predict_blood_group():
+    if model is None:
+        logger.error("Prediction attempt failed: Model is not loaded.")
+        return jsonify({'error': 'Server error: Model failed to load during startup.'}), 503
+
     if 'file' not in request.files:
         return jsonify({'error': 'No file uploaded'}), 400
     
@@ -103,15 +99,11 @@ def predict_blood_group():
         logger.info(f"Predicted blood group: {blood_group}, Confidence: {confidence:.4f}")
         
         return jsonify({'blood_group': blood_group})
+    
     except Exception as e:
         logger.error(f"Prediction failed: {str(e)}", exc_info=True)
         return jsonify({'error': f'Prediction failed: {str(e)}'}), 500
 
-
 @app.route('/')
 def home():
     return render_template('index.html')
-
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=False)
