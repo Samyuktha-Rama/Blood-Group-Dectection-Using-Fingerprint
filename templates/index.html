@@ -346,11 +346,11 @@
 
       try {
         // *** ORIGINAL FUNCTIONALITY PRESERVED ***
-        const response = await fetch('http://127.0.0.1:5000/predict', {
-          method: 'POST',
-          body: formData,
+        const response = await fetch('/predict', { 
+        method: 'POST',
+        body: formData,
         });
-
+        
         const data = await response.json();
 
         if (data.blood_group) {
